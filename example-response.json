@@ -1,0 +1,58 @@
+[
+	{
+		"name": "macos-lock",
+		"description": "Lock your Mac from the command-line",
+		"url": "https://github.com/sindresorhus/macos-lock",
+		"primaryLanguage":
+		{
+			"name": "Shell",
+			"color": "#89e051"
+		}
+	},
+	{
+		"name": "lock-system",
+		"description": "Lock your system",
+		"url": "https://github.com/sindresorhus/lock-system",
+		"primaryLanguage":
+		{
+			"name": "JavaScript",
+			"color": "#f1e05a"
+		}
+	},
+	{
+		"name": "lock-cli",
+		"description": "Lock your system from the command-line",
+		"url": "https://github.com/sindresorhus/lock-cli",
+		"primaryLanguage":
+		{
+			"name": "JavaScript",
+			"color": "#f1e05a"
+		}
+	},
+	{
+		"name": "alfred-lock",
+		"description": "Alfred 3 workflow to lock your Mac",
+		"url": "https://github.com/sindresorhus/alfred-lock",
+		"primaryLanguage": null
+	},
+	{
+		"name": "swift-snippets",
+		"description": "Various nifty Swift snippets and playgrounds I have created",
+		"url": "https://github.com/sindresorhus/swift-snippets",
+		"primaryLanguage":
+		{
+			"name": "Swift",
+			"color": "#ffac45"
+		}
+	},
+	{
+		"name": "p-progress",
+		"description": "Create a promise that reports progress",
+		"url": "https://github.com/sindresorhus/p-progress",
+		"primaryLanguage":
+		{
+			"name": "JavaScript",
+			"color": "#f1e05a"
+		}
+	}
+]

@@ -1,0 +1,19 @@
+{
+	"private": true,
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "xo",
+		"start": "micro",
+		"dev": "micro-dev"
+	},
+	"dependencies": {
+		"got": "^7.1.0",
+		"micro": "^8.0.4"
+	},
+	"devDependencies": {
+		"micro-dev": "^1.2.3",
+		"xo": "*"
+	}
+}
