@@ -4,7 +4,7 @@
 		"node": ">=8"
 	},
 	"scripts": {
-		"test": "xo",
+		"test": "xo && ava",
 		"start": "micro",
 		"dev": "micro-dev"
 	},
@@ -13,7 +13,11 @@
 		"micro": "^8.0.4"
 	},
 	"devDependencies": {
+		"ava": "*",
+		"delay": "^2.0.0",
 		"micro-dev": "^1.2.3",
+		"nock": "^9.0.18",
+		"test-listen": "^1.0.2",
 		"xo": "*"
 	}
 }
