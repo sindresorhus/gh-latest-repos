@@ -14,6 +14,7 @@
 	},
 	"devDependencies": {
 		"ava": "*",
+		"delay": "^2.0.0",
 		"micro-dev": "^1.2.3",
 		"nock": "^9.0.18",
 		"test-listen": "^1.0.2",

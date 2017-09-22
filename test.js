@@ -3,6 +3,7 @@ import got from 'got';
 import micro from 'micro';
 import nock from 'nock';
 import testListen from 'test-listen';
+import delay from 'delay';
 import fixture from './example-response';
 
 const ORIGIN = process.env.ORIGIN;
@@ -16,7 +17,8 @@ test.before(async () => {
 	process.env.GITHUB_TOKEN = 'unicorn';
 	process.env.GITHUB_USERNAME = 'sindresorhus';
 
-	nock('https://api.github.com/graphql/')
+	nock('https://api.github.com/graphql')
+		.filteringPath(pth => `${pth}/`)
 		.matchHeader('authorization', `bearer ${process.env.GITHUB_TOKEN}`)
 		.post('/')
 		.reply(200, {
@@ -30,6 +32,8 @@ test.before(async () => {
 		});
 
 	url = await testListen(micro(require('.')));
+
+	await delay(1000);
 });
 
 test.after(() => {
