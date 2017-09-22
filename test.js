@@ -21,15 +21,7 @@ test.before(async () => {
 		.filteringPath(pth => `${pth}/`)
 		.matchHeader('authorization', `bearer ${process.env.GITHUB_TOKEN}`)
 		.post('/')
-		.reply(200, {
-			data: {
-				user: {
-					repositories: {
-						nodes: fixture
-					}
-				}
-			}
-		});
+		.reply(200, {data: {user: {repositories: {nodes: fixture}}}});
 
 	url = await testListen(micro(require('.')));
 
