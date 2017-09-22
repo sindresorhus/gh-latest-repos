@@ -48,7 +48,7 @@ const query = `
 let responseText = '[]';
 
 async function fetchRepos() {
-	const {body} = await got.post('https://api.github.com/graphql', {
+	const {body} = await got.post('https://api.github.com/graphql/', {
 		json: true,
 		body: {query},
 		headers: {
