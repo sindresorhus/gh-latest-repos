@@ -1,5 +1,5 @@
 'use strict';
-const got = require('got');
+const graphqlGot = require('graphql-got');
 const controlAccess = require('control-access');
 
 const token = process.env.GITHUB_TOKEN;
@@ -49,15 +49,14 @@ const query = `
 let responseText = '[]';
 
 async function fetchRepos() {
-	const {body} = await got.post('https://api.github.com/graphql', {
-		json: true,
-		body: {query},
+	const {body} = await graphqlGot('https://api.github.com/graphql', {
+		query,
 		headers: {
 			authorization: `bearer ${token}`
 		}
 	});
 
-	const repos = body.data.user.repositories.nodes;
+	const repos = body.user.repositories.nodes;
 	responseText = JSON.stringify(repos);
 }
 
