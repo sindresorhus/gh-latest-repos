@@ -17,11 +17,21 @@ test.before(async () => {
 	process.env.GITHUB_TOKEN = 'unicorn';
 	process.env.GITHUB_USERNAME = 'sindresorhus';
 
+	const response = {
+		data: {
+			user: {
+				repositories: {
+					nodes: fixture
+				}
+			}
+		}
+	};
+
 	nock('https://api.github.com/graphql')
 		.filteringPath(pth => `${pth}/`)
 		.matchHeader('authorization', `bearer ${process.env.GITHUB_TOKEN}`)
 		.post('/')
-		.reply(200, {data: {user: {repositories: {nodes: fixture}}}});
+		.reply(200, response);
 
 	url = await testListen(micro(require('.')));
 
