@@ -6,14 +6,14 @@ import testListen from 'test-listen';
 import delay from 'delay';
 import fixture from './example-response';
 
-const ORIGIN = process.env.ACCESS_ORIGIN;
+const ORIGIN = process.env.ACCESS_ALLOW_ORIGIN;
 const TOKEN = process.env.GITHUB_TOKEN;
 const USERNAME = process.env.GITHUB_USERNAME;
 
 let url;
 
 test.before(async () => {
-	process.env.ACCESS_ORIGIN = '*';
+	process.env.ACCESS_ALLOW_ORIGIN = '*';
 	process.env.GITHUB_TOKEN = 'unicorn';
 	process.env.GITHUB_USERNAME = 'sindresorhus';
 
@@ -39,7 +39,7 @@ test.before(async () => {
 });
 
 test.after(() => {
-	process.env.ACCESS_ORIGIN = ORIGIN;
+	process.env.ACCESS_ALLOW_ORIGIN = ORIGIN;
 	process.env.GITHUB_TOKEN = TOKEN;
 	process.env.GITHUB_USERNAME = USERNAME;
 });
