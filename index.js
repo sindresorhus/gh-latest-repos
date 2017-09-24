@@ -49,11 +49,9 @@ const query = `
 let responseText = '[]';
 
 async function fetchRepos() {
-	const {body} = await graphqlGot('https://api.github.com/graphql', {
+	const {body} = await graphqlGot('api.github.com/graphql', {
 		query,
-		headers: {
-			authorization: `bearer ${token}`
-		}
+		token
 	});
 
 	const repos = body.user.repositories.nodes;

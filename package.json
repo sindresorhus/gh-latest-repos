@@ -10,12 +10,13 @@
 	},
 	"dependencies": {
 		"control-access": "^0.1.0",
-		"graphql-got": "^0.1.0",
+		"graphql-got": "^0.1.1",
 		"micro": "^8.0.4"
 	},
 	"devDependencies": {
 		"ava": "*",
 		"delay": "^2.0.0",
+		"got": "^7.1.0",
 		"micro-dev": "^1.2.3",
 		"nock": "^9.0.18",
 		"test-listen": "^1.0.2",
