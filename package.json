@@ -9,6 +9,7 @@
 		"dev": "micro-dev"
 	},
 	"dependencies": {
+		"control-access": "^0.1.0",
 		"got": "^7.1.0",
 		"micro": "^8.0.4"
 	},

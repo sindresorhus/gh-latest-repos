@@ -1,9 +1,10 @@
 'use strict';
 const got = require('got');
+const controlAccess = require('control-access');
 
 const token = process.env.GITHUB_TOKEN;
 const username = process.env.GITHUB_USERNAME;
-const origin = process.env.ORIGIN;
+const origin = process.env.ACCESS_ALLOW_ORIGIN;
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 if (!token) {
@@ -15,7 +16,7 @@ if (!username) {
 }
 
 if (!origin) {
-	throw new Error('Please set the `access-control-allow-origin` you want in the `ORIGIN` environment variable');
+	throw new Error('Please set the `access-control-allow-origin` you want in the `ACCESS_ALLOW_ORIGIN` environment variable');
 }
 
 const query = `
@@ -64,11 +65,6 @@ setInterval(fetchRepos, ONE_DAY);
 fetchRepos();
 
 module.exports = (request, response) => {
-	response.setHeader('access-control-allow-origin', origin);
-
-	if (origin !== '*') {
-		response.setHeader('vary', 'origin');
-	}
-
+	controlAccess()(request, response);
 	response.end(responseText);
 };
