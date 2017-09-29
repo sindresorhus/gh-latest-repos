@@ -4,7 +4,7 @@
 
 I currently use this on [my website](https://sindresorhus.com/#projects).
 
-It returns the 6 latest repos and it's cached for a day.
+It returns the 6 latest repos, unless specified otherwise (see [here](env)) and the results are cached for a day.
 
 [Example response](example-response.json)
 
@@ -26,6 +26,7 @@ $ now sindresorhus/gh-latest-repos -e NODE_ENV=production -e GITHUB_TOKEN=xxx -e
 Deploy to your hosting provider, set the below environment variables, and start it with `npm start`.
 
 
+<a name="env"></a>
 ## Environment variables
 
 Define the following environment variables:
@@ -33,6 +34,7 @@ Define the following environment variables:
 - `GITHUB_TOKEN` - [Personal access token.](https://github.com/settings/tokens/new?description=gh-latest-repos)
 - `GITHUB_USERNAME` - The username you like to get repos from.
 - `ACCESS_ALLOW_ORIGIN` - The URL of your website or `*` if you want to allow any origin (not recommended), for the `Access-Control-Allow-Origin` header.
+- `MAX_REPOS` - The number of repos returned. This is optional.
 
 
 ## License

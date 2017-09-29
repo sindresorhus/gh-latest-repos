@@ -5,6 +5,7 @@ const controlAccess = require('control-access');
 const token = process.env.GITHUB_TOKEN;
 const username = process.env.GITHUB_USERNAME;
 const origin = process.env.ACCESS_ALLOW_ORIGIN;
+const maxRepos = process.env.MAX_REPOS ? process.env.MAX_REPOS : 6;
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
 if (!token) {
@@ -23,7 +24,7 @@ const query = `
 	query {
 		user(login: "${username}") {
 			repositories(
-				last: 6,
+				last: ${maxRepos},
 				isFork: false,
 				affiliations: OWNER,
 				privacy: PUBLIC,
