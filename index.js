@@ -43,6 +43,9 @@ const query = `
 					stargazers() {
 						totalCount
 					}
+					forks() {
+						totalCount
+					}
 				}
 			}
 		}
