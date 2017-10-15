@@ -4,7 +4,7 @@
 
 I currently use this on [my website](https://sindresorhus.com/#projects).
 
-It returns the 6 latest repos along with their number of stars and forks. The result is cached for a day.
+It returns the 6 latest repos along with some metadata. The result is cached for a day.
 
 [Example response](example-response.json)
 
