@@ -40,6 +40,9 @@ const query = `
 						name
 						color
 					}
+					stargazers() {
+						totalCount
+					}
 				}
 			}
 		}
