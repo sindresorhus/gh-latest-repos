@@ -47,6 +47,10 @@ test.after(() => {
 test('fetch latest repos for user', async t => {
 	const {body} = await got(url, {json: true});
 	t.deepEqual(body, fixture);
+	if (body.length > 0) {
+		t.is(typeof body[0].stargazers.totalCount, 'number');
+		t.is(typeof body[0].forks.totalCount, 'number');
+	}
 });
 
 test('set origin header', async t => {
