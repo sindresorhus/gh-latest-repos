@@ -1,0 +1,89 @@
+[
+	{
+		"name": "alfred-lock",
+		"description": "Alfred 3 workflow to lock your Mac",
+		"url": "https://github.com/sindresorhus/alfred-lock",
+		"primaryLanguage": null,
+		"stargazers": {
+			"totalCount": 34
+		},
+		"forks": {
+			"totalCount": 0
+		}
+	},
+	{
+		"name": "swift-snippets",
+		"description": "Various nifty Swift snippets and playgrounds I have created",
+		"url": "https://github.com/sindresorhus/swift-snippets",
+		"primaryLanguage": {
+			"name": "Swift",
+			"color": "#ffac45"
+		},
+		"stargazers": {
+			"totalCount": 34
+		},
+		"forks": {
+			"totalCount": 0
+		}
+	},
+	{
+		"name": "p-progress",
+		"description": "Create a promise that reports progress",
+		"url": "https://github.com/sindresorhus/p-progress",
+		"primaryLanguage": {
+			"name": "JavaScript",
+			"color": "#f1e05a"
+		},
+		"stargazers": {
+			"totalCount": 648
+		},
+		"forks": {
+			"totalCount": 13
+		}
+	},
+	{
+		"name": "is",
+		"description": "Type check values: `is.string('🦄') //=> true`",
+		"url": "https://github.com/sindresorhus/is",
+		"primaryLanguage": {
+			"name": "JavaScript",
+			"color": "#f1e05a"
+		},
+		"stargazers": {
+			"totalCount": 295
+		},
+		"forks": {
+			"totalCount": 14
+		}
+	},
+	{
+		"name": "gh-latest-repos",
+		"description": "Microservice to get the latest public GitHub repos from a user",
+		"url": "https://github.com/sindresorhus/gh-latest-repos",
+		"primaryLanguage": {
+			"name": "JavaScript",
+			"color": "#f1e05a"
+		},
+		"stargazers": {
+			"totalCount": 105
+		},
+		"forks": {
+			"totalCount": 8
+		}
+	},
+	{
+		"name": "strip-debug-cli",
+		"description": "Strip console, alert, and debugger statements from JavaScript code",
+		"url": "https://github.com/sindresorhus/strip-debug-cli",
+		"primaryLanguage": {
+			"name": "JavaScript",
+			"color": "#f1e05a"
+		},
+		"stargazers": {
+			"totalCount": 22
+		},
+		"forks": {
+			"totalCount": 2
+		}
+	}
+]

@@ -5,6 +5,7 @@ import nock from 'nock';
 import testListen from 'test-listen';
 import delay from 'delay';
 import fixture from './example-response';
+import githubFixture from './github-response';
 
 const ORIGIN = process.env.ACCESS_ALLOW_ORIGIN;
 const TOKEN = process.env.GITHUB_TOKEN;
@@ -21,7 +22,7 @@ test.before(async () => {
 		data: {
 			user: {
 				repositories: {
-					nodes: fixture
+					nodes: githubFixture
 				}
 			}
 		}

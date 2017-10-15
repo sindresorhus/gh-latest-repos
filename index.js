@@ -60,7 +60,7 @@ async function fetchRepos() {
 		token
 	});
 
-	const repos = body.user.repositories.nodes.map(repo => repo && ({
+	const repos = body.user.repositories.nodes.map(repo => ({
 		...repo,
 		stargazers: repo.stargazers.totalCount,
 		forks: repo.forks.totalCount
