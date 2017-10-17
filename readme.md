@@ -4,7 +4,7 @@
 
 I currently use this on [my website](https://sindresorhus.com/#projects).
 
-It returns the 6 latest repos, unless specified otherwise (see [here](env)) and the results are cached for a day.
+It returns the 6 latest repos, unless specified otherwise and the results are cached for a day.
 
 [Example response](example-response.json)
 
@@ -13,12 +13,12 @@ It returns the 6 latest repos, unless specified otherwise (see [here](env)) and 
 
 ### With [`now`](https://now.sh)
 
-[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/sindresorhus/gh-latest-repos&env=GITHUB_TOKEN&env=GITHUB_USERNAME&env=ACCESS_ALLOW_ORIGIN)
+[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/sindresorhus/gh-latest-repos&env=GITHUB_TOKEN&env=GITHUB_USERNAME&env=ACCESS_ALLOW_ORIGIN&env=MAX_REPOS)
 
 or
 
 ```
-$ now sindresorhus/gh-latest-repos -e NODE_ENV=production -e GITHUB_TOKEN=xxx -e GITHUB_USERNAME=xxx -e ACCESS_ALLOW_ORIGIN=xxx
+$ now sindresorhus/gh-latest-repos -e NODE_ENV=production -e GITHUB_TOKEN=xxx -e GITHUB_USERNAME=xxx -e ACCESS_ALLOW_ORIGIN=xxx -e MAX_REPOS=xxx
 ```
 
 ### Manual
@@ -26,7 +26,6 @@ $ now sindresorhus/gh-latest-repos -e NODE_ENV=production -e GITHUB_TOKEN=xxx -e
 Deploy to your hosting provider, set the below environment variables, and start it with `npm start`.
 
 
-<a name="env"></a>
 ## Environment variables
 
 Define the following environment variables:
