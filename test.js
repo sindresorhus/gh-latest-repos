@@ -10,6 +10,7 @@ import githubFixture from './github-response';
 const ORIGIN = process.env.ACCESS_ALLOW_ORIGIN;
 const TOKEN = process.env.GITHUB_TOKEN;
 const USERNAME = process.env.GITHUB_USERNAME;
+process.env.MAX_REPOS = 6;
 
 let url;
 
@@ -52,6 +53,11 @@ test('fetch latest repos for user', async t => {
 		t.is(typeof body[0].stargazers, 'number');
 		t.is(typeof body[0].forks, 'number');
 	}
+});
+
+test('ensure number of repos returned equals `process.env.MAX_REPOS`', async t => {
+	const {body} = await got(url, {json: true});
+	t.deepEqual(body.length, Number(process.env.MAX_REPOS), `Expected ${process.env.MAX_REPOS}, but got ${body.length}`);
 });
 
 test('set origin header', async t => {
