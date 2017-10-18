@@ -5,6 +5,7 @@ import nock from 'nock';
 import testListen from 'test-listen';
 import delay from 'delay';
 import fixture from './example-response';
+import githubFixture from './github-response';
 
 const ORIGIN = process.env.ACCESS_ALLOW_ORIGIN;
 const TOKEN = process.env.GITHUB_TOKEN;
@@ -22,7 +23,7 @@ test.before(async () => {
 		data: {
 			user: {
 				repositories: {
-					nodes: fixture
+					nodes: githubFixture
 				}
 			}
 		}
@@ -48,6 +49,10 @@ test.after(() => {
 test('fetch latest repos for user', async t => {
 	const {body} = await got(url, {json: true});
 	t.deepEqual(body, fixture);
+	if (body.length > 0) {
+		t.is(typeof body[0].stargazers, 'number');
+		t.is(typeof body[0].forks, 'number');
+	}
 });
 
 test('ensure number of repos returned equals `process.env.MAX_REPOS`', async t => {

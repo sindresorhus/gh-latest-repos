@@ -4,8 +4,12 @@
 		"description": "Alfred 3 workflow to lock your Mac",
 		"url": "https://github.com/sindresorhus/alfred-lock",
 		"primaryLanguage": null,
-		"stargazers": 34,
-		"forks": 0
+		"stargazers": {
+			"totalCount": 34
+		},
+		"forks": {
+			"totalCount": 0
+		}
 	},
 	{
 		"name": "swift-snippets",
@@ -15,8 +19,12 @@
 			"name": "Swift",
 			"color": "#ffac45"
 		},
-		"stargazers": 34,
-		"forks": 0
+		"stargazers": {
+			"totalCount": 34
+		},
+		"forks": {
+			"totalCount": 0
+		}
 	},
 	{
 		"name": "p-progress",
@@ -26,8 +34,12 @@
 			"name": "JavaScript",
 			"color": "#f1e05a"
 		},
-		"stargazers": 648,
-		"forks": 13
+		"stargazers": {
+			"totalCount": 648
+		},
+		"forks": {
+			"totalCount": 13
+		}
 	},
 	{
 		"name": "is",
@@ -37,8 +49,12 @@
 			"name": "JavaScript",
 			"color": "#f1e05a"
 		},
-		"stargazers": 295,
-		"forks": 14
+		"stargazers": {
+			"totalCount": 295
+		},
+		"forks": {
+			"totalCount": 14
+		}
 	},
 	{
 		"name": "gh-latest-repos",
@@ -48,8 +64,12 @@
 			"name": "JavaScript",
 			"color": "#f1e05a"
 		},
-		"stargazers": 105,
-		"forks": 8
+		"stargazers": {
+			"totalCount": 105
+		},
+		"forks": {
+			"totalCount": 8
+		}
 	},
 	{
 		"name": "strip-debug-cli",
@@ -59,7 +79,11 @@
 			"name": "JavaScript",
 			"color": "#f1e05a"
 		},
-		"stargazers": 22,
-		"forks": 2
+		"stargazers": {
+			"totalCount": 22
+		},
+		"forks": {
+			"totalCount": 2
+		}
 	}
 ]

@@ -4,7 +4,7 @@
 
 I currently use this on [my website](https://sindresorhus.com/#projects).
 
-It returns the 6 latest repos, unless specified otherwise and the results are cached for a day.
+It returns the latest repos along with some metadata. The result is cached for a day.
 
 [Example response](example-response.json)
 

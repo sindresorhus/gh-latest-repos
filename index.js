@@ -41,6 +41,12 @@ const query = `
 						name
 						color
 					}
+					stargazers() {
+						totalCount
+					}
+					forks() {
+						totalCount
+					}
 				}
 			}
 		}
@@ -55,7 +61,11 @@ async function fetchRepos() {
 		token
 	});
 
-	const repos = body.user.repositories.nodes;
+	const repos = body.user.repositories.nodes.map(repo => ({
+		...repo,
+		stargazers: repo.stargazers.totalCount,
+		forks: repo.forks.totalCount
+	}));
 	responseText = JSON.stringify(repos);
 }
 
