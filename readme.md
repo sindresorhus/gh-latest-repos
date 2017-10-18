@@ -33,7 +33,7 @@ Define the following environment variables:
 - `GITHUB_TOKEN` - [Personal access token.](https://github.com/settings/tokens/new?description=gh-latest-repos)
 - `GITHUB_USERNAME` - The username you like to get repos from.
 - `ACCESS_ALLOW_ORIGIN` - The URL of your website or `*` if you want to allow any origin (not recommended), for the `Access-Control-Allow-Origin` header.
-- `MAX_REPOS` - The number of repos returned. This is optional.
+- `MAX_REPOS` - The number of repos returned. Optional. Defaults to 6.
 
 
 ## License
