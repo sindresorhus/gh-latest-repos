@@ -5,7 +5,7 @@ const controlAccess = require('control-access');
 const token = process.env.GITHUB_TOKEN;
 const username = process.env.GITHUB_USERNAME;
 const origin = process.env.ACCESS_ALLOW_ORIGIN;
-const cache = "max-age=" + (process.env.CACHE_MAX_AGE || 300);
+const cache = 'max-age=' + (process.env.CACHE_MAX_AGE || 300);
 const maxRepos = Number(process.env.MAX_REPOS) || 6;
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
@@ -75,6 +75,6 @@ fetchRepos();
 
 module.exports = (request, response) => {
 	controlAccess()(request, response);
-	response.setHeader("cache-control", cache)
+	response.setHeader('cache-control', cache);
 	response.end(responseText);
 };
