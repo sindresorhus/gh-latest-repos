@@ -77,13 +77,14 @@ setInterval(fetchRepos, ONE_DAY);
 fetchRepos();
 
 module.exports = (request, response) => {
-	if (request.headers.etag === responseETag) {
-		response.statusCode = 304;
-		response.end();
-	}
-
 	controlAccess()(request, response);
 	response.setHeader('cache-control', cache);
 	response.setHeader('etag', responseETag);
+
+	if (request.headers.etag === responseETag) {
+		response.statusCode = 304;
+		response.end();
+		return;
+	}
 	response.end(responseText);
 };
