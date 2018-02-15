@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"control-access": "^0.1.0",
+		"etag": "^1.8.1",
 		"graphql-got": "^0.1.1",
 		"micro": "^8.0.4"
 	},

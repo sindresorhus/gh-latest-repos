@@ -4,12 +4,14 @@ import micro from 'micro';
 import nock from 'nock';
 import testListen from 'test-listen';
 import delay from 'delay';
+import etag from 'etag';
 import fixture from './example-response';
 import githubFixture from './github-response';
 
 const ORIGIN = process.env.ACCESS_ALLOW_ORIGIN;
 const TOKEN = process.env.GITHUB_TOKEN;
 const USERNAME = process.env.GITHUB_USERNAME;
+process.env.CACHE_MAX_AGE = 300;
 process.env.MAX_REPOS = 6;
 
 let url;
@@ -61,6 +63,8 @@ test('ensure number of repos returned equals `process.env.MAX_REPOS`', async t =
 });
 
 test('set origin header', async t => {
-	const {headers} = await got(url, {json: true});
+	const {body, headers} = await got(url, {json: true});
 	t.is(headers['access-control-allow-origin'], '*');
+	t.is(headers['cache-control'], 'max-age=300');
+	t.is(headers.etag, etag(JSON.stringify(body)));
 });
