@@ -78,6 +78,12 @@ fetchRepos();
 
 module.exports = (request, response) => {
 	controlAccess()(request, response);
+	if (responseText === '[]') {
+		response.statusCode = 202;
+		response.end('[]');
+		return;
+	}
+
 	response.setHeader('cache-control', cache);
 	response.setHeader('etag', responseETag);
 
