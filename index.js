@@ -57,6 +57,7 @@ const query = `
 
 let responseText = '[]';
 let responseETag = '';
+let responsePromise;
 
 async function fetchRepos() {
 	const {body} = await graphqlGot('api.github.com/graphql', {
@@ -71,6 +72,10 @@ async function fetchRepos() {
 	}));
 	responseText = JSON.stringify(repos);
 	responseETag = etag(responseText);
+	if (responsePromise) {
+		responsePromise();
+		responsePromise = null;
+	}
 }
 
 setInterval(fetchRepos, ONE_DAY);
@@ -78,15 +83,18 @@ fetchRepos();
 
 module.exports = (request, response) => {
 	controlAccess()(request, response);
-	if (responseText === '[]') {
-		response.statusCode = 202;
-		response.end('[]');
-		return;
-	}
-
 	response.setHeader('cache-control', cache);
 	response.setHeader('etag', responseETag);
 
+	if (!responseETag) {
+		new Promise(resolve => {
+			responsePromise = resolve;
+		}).then(() => {
+			response.setHeader('etag', responseETag);
+			response.end(responseText);
+		});
+		return;
+	}
 	if (request.headers.etag === responseETag) {
 		response.statusCode = 304;
 		response.end();
