@@ -74,9 +74,12 @@ async function fetchRepos() {
 }
 
 setInterval(fetchRepos, ONE_DAY);
-fetchRepos();
 
-module.exports = (request, response) => {
+module.exports = async (request, response) => {
+	if (!responseETag) {
+		await fetchRepos();
+	}
+
 	controlAccess()(request, response);
 	response.setHeader('cache-control', cache);
 	response.setHeader('etag', responseETag);
