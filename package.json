@@ -9,18 +9,18 @@
 		"dev": "micro-dev"
 	},
 	"dependencies": {
-		"control-access": "^0.1.0",
+		"control-access": "^0.1.1",
 		"etag": "^1.8.1",
-		"graphql-got": "^0.1.1",
-		"micro": "^8.0.4"
+		"graphql-got": "^0.1.2",
+		"micro": "^9.3.3"
 	},
 	"devDependencies": {
-		"ava": "*",
-		"delay": "^2.0.0",
-		"got": "^7.1.0",
-		"micro-dev": "^1.2.3",
-		"nock": "^9.0.18",
-		"test-listen": "^1.0.2",
-		"xo": "*"
+		"ava": "^0.25.0",
+		"delay": "^4.1.0",
+		"got": "^9.2.2",
+		"micro-dev": "^3.0.0",
+		"nock": "^10.0.1",
+		"test-listen": "^1.1.0",
+		"xo": "^0.23.0"
 	}
 }
