@@ -21,11 +21,21 @@ test.before(async () => {
 	process.env.GITHUB_TOKEN = 'unicorn';
 	process.env.GITHUB_USERNAME = 'sindresorhus';
 
-	const response = {
+	const response1 = {
 		data: {
 			user: {
 				repositories: {
-					nodes: githubFixture
+					edges: githubFixture.slice(0, 6)
+				}
+			}
+		}
+	};
+
+	const response2 = {
+		data: {
+			user: {
+				repositories: {
+					edges: githubFixture.slice(6)
 				}
 			}
 		}
@@ -35,7 +45,9 @@ test.before(async () => {
 		.filteringPath(pth => `${pth}/`)
 		.matchHeader('authorization', `bearer ${process.env.GITHUB_TOKEN}`)
 		.post('/')
-		.reply(200, response);
+		.reply(200, response1)
+		.post('/')
+		.reply(200, response2);
 
 	url = await testListen(micro(require('.')));
 
