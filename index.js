@@ -77,7 +77,7 @@ setInterval(fetchRepos, ONE_DAY);
 fetchRepos();
 
 module.exports = (request, response) => {
-	controlAccess()(request, response);
+	controlAccess({allowOrigin: origin})(request, response);
 	response.setHeader('cache-control', cache);
 	response.setHeader('etag', responseETag);
 
