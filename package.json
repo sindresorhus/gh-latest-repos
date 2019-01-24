@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"engines": {
-		"node": ">=8"
+		"node": ">=10"
 	},
 	"scripts": {
 		"test": "xo && ava",
@@ -15,12 +15,12 @@
 		"micro": "^9.3.3"
 	},
 	"devDependencies": {
-		"ava": "^0.25.0",
+		"ava": "^1.1.0",
 		"delay": "^4.1.0",
-		"got": "^9.2.2",
+		"got": "^9.6.0",
 		"micro-dev": "^3.0.0",
-		"nock": "^10.0.1",
+		"nock": "^10.0.6",
 		"test-listen": "^1.1.0",
-		"xo": "^0.23.0"
+		"xo": "^0.24.0"
 	}
 }

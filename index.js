@@ -87,5 +87,6 @@ module.exports = (request, response) => {
 		response.end();
 		return;
 	}
+
 	response.end(responseText);
 };
