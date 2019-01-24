@@ -28,6 +28,7 @@ const query = `
 			repositories(
 				last: ${maxRepos},
 				isFork: false,
+				isLocked: false,
 				ownerAffiliations: OWNER,
 				privacy: PUBLIC,
 				orderBy: {
