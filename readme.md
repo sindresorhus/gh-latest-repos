@@ -18,7 +18,8 @@ It returns the latest repos along with some metadata. The result is cached for a
 or
 
 ```
-$ now sindresorhus/gh-latest-repos -e NODE_ENV=production -e GITHUB_TOKEN=xxx -e GITHUB_USERNAME=xxx -e ACCESS_ALLOW_ORIGIN=xxx -e MAX_REPOS=xxx -e CACHE_MAX_AGE=xxx
+$ git clone https://github.com/sindresorhus/gh-latest-repos.git
+$ now gh-latest-repos --platform-version 1 --env NODE_ENV=production --env GITHUB_TOKEN=xxx --env GITHUB_USERNAME=xxx --env ACCESS_ALLOW_ORIGIN=xxx --env MAX_REPOS=xxx --env CACHE_MAX_AGE=xxx
 ```
 
 ### Manual
