@@ -28,7 +28,7 @@ const query = `
 			repositories(
 				last: ${maxRepos},
 				isFork: false,
-				affiliations: OWNER,
+				ownerAffiliations: OWNER,
 				privacy: PUBLIC,
 				orderBy: {
 					field: CREATED_AT,
