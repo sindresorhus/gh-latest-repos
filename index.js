@@ -22,11 +22,12 @@ if (!origin) {
 	throw new Error('Please set the `access-control-allow-origin` you want in the `ACCESS_ALLOW_ORIGIN` environment variable');
 }
 
-const query = `
+const query = (cursor = null, last) => `
 	query {
 		user(login: "${username}") {
 			repositories(
-				last: ${maxRepos},
+				${cursor ? `before: "${cursor}",` : ''}
+				last: ${last},
 				isFork: false,
 				isLocked: false,
 				ownerAffiliations: OWNER,
@@ -51,6 +52,9 @@ const query = `
 						totalCount
 					}
 				}
+				edges {
+          cursor
+        }
 			}
 		}
 	}
@@ -59,13 +63,23 @@ const query = `
 let responseText = '[]';
 let responseETag = '';
 
-async function fetchRepos() {
+async function queryRepos(size, cursor) {
 	const {body} = await graphqlGot('api.github.com/graphql', {
-		query,
+		query: query(cursor, size),
 		token
 	});
+	const repositories = body.user.repositories.nodes.filter(repo => Boolean(repo.description));
+	if (repositories.length < size && body.user.repositories.edges.length > 0) {
+		repositories.push(...(await queryRepos(size - repositories.length, body.user.repositories.edges[0].cursor)));
+	}
 
-	const repos = body.user.repositories.nodes.map(repo => ({
+	return repositories;
+}
+
+async function fetchRepos() {
+	const repositories = await queryRepos(maxRepos);
+
+	const repos = repositories.map(repo => ({
 		...repo,
 		stargazers: repo.stargazers.totalCount,
 		forks: repo.forks.totalCount
