@@ -1,9 +1,8 @@
+import {createServer} from 'http';
 import test from 'ava';
 import got from 'got';
-import micro from 'micro';
 import nock from 'nock';
 import testListen from 'test-listen';
-import delay from 'delay';
 import etag from 'etag';
 import fixture from './example-response';
 import githubFixture from './github-response';
@@ -32,14 +31,13 @@ test.before(async () => {
 	};
 
 	nock('https://api.github.com/graphql')
+		.persist()
 		.filteringPath(pth => `${pth}/`)
 		.matchHeader('authorization', `bearer ${process.env.GITHUB_TOKEN}`)
 		.post('/')
 		.reply(200, response);
 
-	url = await testListen(micro(require('.')));
-
-	await delay(1000);
+	url = await testListen(createServer(require('.')));
 });
 
 test.after(() => {
@@ -65,6 +63,6 @@ test('ensure number of repos returned equals `process.env.MAX_REPOS`', async t =
 test('set origin header', async t => {
 	const {body, headers} = await got(url, {json: true});
 	t.is(headers['access-control-allow-origin'], '*');
-	t.is(headers['cache-control'], 'max-age=300');
+	t.is(headers['cache-control'], 's-maxage=86400000, max-age=300');
 	t.is(headers.etag, etag(JSON.stringify(body)));
 });

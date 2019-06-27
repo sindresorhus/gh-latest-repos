@@ -11,20 +11,10 @@ It returns the latest repos along with some metadata. The result is cached for a
 
 ## Usage
 
-### With [`now`](https://now.sh)
-
-[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/sindresorhus/gh-latest-repos&env=GITHUB_TOKEN&env=GITHUB_USERNAME&env=ACCESS_ALLOW_ORIGIN&env=MAX_REPOS&env=CACHE_MAX_AGE)
-
-or
-
 ```
 $ git clone https://github.com/sindresorhus/gh-latest-repos.git
-$ now gh-latest-repos --platform-version 1 --env NODE_ENV=production --env GITHUB_TOKEN=xxx --env GITHUB_USERNAME=xxx --env ACCESS_ALLOW_ORIGIN=xxx --env MAX_REPOS=xxx --env CACHE_MAX_AGE=xxx
+$ now gh-latest-repos --env GITHUB_TOKEN=xxx --env GITHUB_USERNAME=xxx --env ACCESS_ALLOW_ORIGIN=xxx --env MAX_REPOS=xxx --env CACHE_MAX_AGE=xxx
 ```
-
-### Manual
-
-Deploy to your hosting provider, set the below environment variables, and start it with `npm start`.
 
 
 ## Environment variables

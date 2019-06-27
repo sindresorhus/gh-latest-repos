@@ -5,21 +5,18 @@
 	},
 	"scripts": {
 		"test": "xo && ava",
-		"start": "micro",
-		"dev": "micro-dev"
+		"start": "now dev"
 	},
 	"dependencies": {
 		"control-access": "^0.1.1",
 		"etag": "^1.8.1",
-		"graphql-got": "^0.1.2",
-		"micro": "^9.3.3"
+		"graphql-got": "^0.1.2"
 	},
 	"devDependencies": {
 		"ava": "^1.1.0",
-		"delay": "^4.1.0",
 		"got": "^9.6.0",
-		"micro-dev": "^3.0.0",
 		"nock": "^10.0.6",
+		"now": "^15.6.1",
 		"test-listen": "^1.1.0",
 		"xo": "^0.24.0"
 	}
