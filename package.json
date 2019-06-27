@@ -11,6 +11,7 @@
 	"dependencies": {
 		"control-access": "^0.1.1",
 		"etag": "^1.8.1",
+		"fresh": "^0.5.2",
 		"graphql-got": "^0.1.2",
 		"micro": "^9.3.3"
 	},
