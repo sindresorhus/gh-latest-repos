@@ -2,6 +2,7 @@
 const graphqlGot = require('graphql-got');
 const controlAccess = require('control-access');
 const etag = require('etag');
+const fresh = require('fresh');
 
 const token = process.env.GITHUB_TOKEN;
 const username = process.env.GITHUB_USERNAME;
@@ -79,14 +80,15 @@ fetchRepos();
 
 module.exports = (request, response) => {
 	controlAccess()(request, response);
-	response.setHeader('cache-control', cache);
-	response.setHeader('etag', responseETag);
 
-	if (request.headers.etag === responseETag) {
+	if (fresh(request.headers, {etag: responseETag})) {
 		response.statusCode = 304;
 		response.end();
 		return;
 	}
+
+	response.setHeader('cache-control', cache);
+	response.setHeader('etag', responseETag);
 
 	response.end(responseText);
 };

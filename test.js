@@ -68,3 +68,10 @@ test('set origin header', async t => {
 	t.is(headers['cache-control'], 'max-age=300');
 	t.is(headers.etag, etag(JSON.stringify(body)));
 });
+
+test('return cached content', async t => {
+	const {headers: {etag}, statusCode} = await got(url, {json: true});
+	const {statusCode: cachedStatusCode} = await got(url, {json: true, headers: {'if-none-match': etag}});
+	t.is(statusCode, 200);
+	t.is(cachedStatusCode, 304);
+});
