@@ -13,21 +13,15 @@ const {
 } = process.env;
 
 if (!GITHUB_TOKEN) {
-	throw new Error(
-		'Please set your GitHub token in the `GITHUB_TOKEN` environment variable'
-	);
+	throw new Error('Please set your GitHub token in the `GITHUB_TOKEN` environment variable');
 }
 
 if (!GITHUB_USERNAME) {
-	throw new Error(
-		'Please set your GitHub username in the `GITHUB_USERNAME` environment variable'
-	);
+	throw new Error('Please set your GitHub username in the `GITHUB_USERNAME` environment variable');
 }
 
 if (!ACCESS_ALLOW_ORIGIN) {
-	throw new Error(
-		'Please set the `access-control-allow-origin` you want in the `ACCESS_ALLOW_ORIGIN` environment variable'
-	);
+	throw new Error('Please set the `access-control-allow-origin` you want in the `ACCESS_ALLOW_ORIGIN` environment variable');
 }
 
 const query = `
