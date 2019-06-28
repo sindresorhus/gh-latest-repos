@@ -11,8 +11,6 @@ const {
 	MAX_REPOS = 6
 } = process.env;
 
-let cursor = null;
-
 if (!GITHUB_TOKEN) {
 	throw new Error('Please set your GitHub token in the `GITHUB_TOKEN` environment variable');
 }
@@ -26,7 +24,7 @@ if (!ACCESS_ALLOW_ORIGIN) {
 }
 
 const query = `
-	query {
+	query ($cursor: String) {
 		user(login: "${GITHUB_USERNAME}") {
 			repositories(
 				last: ${MAX_REPOS},
@@ -38,7 +36,7 @@ const query = `
 					field: CREATED_AT,
 					direction: ASC
 				}
-				before: ${cursor}
+				before: $cursor
 			) {
 				edges {
 					node {
@@ -63,36 +61,33 @@ const query = `
 	}
 `;
 
+const fetchRepos = async (repos = [], cursor = null) => {
+	const {body} = (await graphqlGot('api.github.com/graphql', {
+		query,
+		token: GITHUB_TOKEN,
+		variables: {cursor}
+	}));
+
+	const currentRepos = body.user.repositories.edges
+		.filter(({node}) => node.description)
+		.map(({node}) => ({
+			...node,
+			stargazers: node.stargazers.totalCount,
+			forks: node.forks.totalCount
+		}));
+
+	if ((repos.length + currentRepos.length) < MAX_REPOS) {
+		return fetchRepos(repos.concat(currentRepos), body.user.repositories.edges[0].cursor);
+	}
+
+	return repos.concat(currentRepos.slice(repos.length - MAX_REPOS));
+};
+
 module.exports = async (request, response) => {
 	controlAccess()(request, response);
 
 	try {
-		let repos = [];
-
-		while (repos.length < MAX_REPOS) {
-		/* eslint-disable-next-line no-await-in-loop */
-			const {body} = await graphqlGot('api.github.com/graphql', {
-				query,
-				token: GITHUB_TOKEN
-			});
-
-			const currentRepos = body.user.repositories.edges
-				.filter(edge => edge.node.description)
-				.map(({node: repo}) => ({
-					...repo,
-					stargazers: repo.stargazers.totalCount,
-					forks: repo.forks.totalCount
-				}));
-
-			if (repos.length + currentRepos.length < MAX_REPOS) {
-				repos = repos.concat(currentRepos);
-			} else {
-				repos = repos.concat(currentRepos.slice(repos.length - MAX_REPOS));
-				break;
-			}
-
-			cursor = body.user.repositories.edges[0].cursor;
-		}
+		const repos = await fetchRepos();
 
 		response.setHeader('cache-control', `s-maxage=${ONE_DAY}, max-age=${CACHE_MAX_AGE}`);
 		response.end(JSON.stringify(repos));
