@@ -19,21 +19,21 @@ test.before(async () => {
 	process.env.GITHUB_TOKEN = 'unicorn';
 	process.env.GITHUB_USERNAME = 'sindresorhus';
 
-	const response1 = {
+	const response = {
 		data: {
 			user: {
 				repositories: {
-					edges: githubFixture.slice(0, 6)
+					edges: githubFixture.slice(6)
 				}
 			}
 		}
 	};
 
-	const response2 = {
+	const maxReposResponse = {
 		data: {
 			user: {
 				repositories: {
-					edges: githubFixture.slice(6)
+					edges: githubFixture.slice(0, 6)
 				}
 			}
 		}
@@ -44,9 +44,9 @@ test.before(async () => {
 		.filteringPath(pth => `${pth}/`)
 		.matchHeader('authorization', `bearer ${process.env.GITHUB_TOKEN}`)
 		.post('/')
-		.reply(200, response1)
-		.post('/')
-		.reply(200, response2);
+		.reply(200, response)
+		.post('/max-repos')
+		.reply(200, maxReposResponse);
 
 	url = await testListen(createServer(require('.')));
 });
@@ -67,7 +67,7 @@ test('fetch latest repos for user', async t => {
 });
 
 test('ensure number of repos returned equals `process.env.MAX_REPOS`', async t => {
-	const {body} = await got(url, {json: true});
+	const {body} = await got(`${url}/max-repos`, {json: true});
 	t.deepEqual(body.length, Number(process.env.MAX_REPOS), `Expected ${process.env.MAX_REPOS}, but got ${body.length}`);
 });
 
