@@ -62,18 +62,18 @@ const query = `
 `;
 
 const fetchRepos = async (repos = [], cursor = null) => {
-	const {body} = (await graphqlGot('api.github.com/graphql', {
+	const {body} = await graphqlGot('api.github.com/graphql', {
 		query,
 		token: GITHUB_TOKEN,
 		variables: {cursor}
-	}));
+	});
 
 	const currentRepos = body.user.repositories.edges
-		.filter(({node}) => node.description)
-		.map(({node}) => ({
-			...node,
-			stargazers: node.stargazers.totalCount,
-			forks: node.forks.totalCount
+		.filter(({node: repo}) => repo.description)
+		.map(({node: repo}) => ({
+			...repo,
+			stargazers: repo.stargazers.totalCount,
+			forks: repo.forks.totalCount
 		}));
 
 	if ((repos.length + currentRepos.length) < MAX_REPOS) {
