@@ -1,8 +1,6 @@
 'use strict';
 const graphqlGot = require('graphql-got');
 const controlAccess = require('control-access');
-const etag = require('etag');
-const fresh = require('fresh');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const {
@@ -65,16 +63,8 @@ const query = `
 	}
 `;
 
-let responseETag = '';
-
 module.exports = async (request, response) => {
 	controlAccess()(request, response);
-
-	if (fresh(request.headers, {etag: responseETag})) {
-		response.statusCode = 304;
-		response.end();
-		return;
-	}
 
 	try {
 		let repos = [];
@@ -104,13 +94,8 @@ module.exports = async (request, response) => {
 			cursor = body.user.repositories.edges[0].cursor;
 		}
 
-		const responseText = JSON.stringify(repos);
-
-		responseETag = etag(responseText);
-
 		response.setHeader('cache-control', `s-maxage=${ONE_DAY}, max-age=${CACHE_MAX_AGE}`);
-		response.setHeader('etag', responseETag);
-		response.end(responseText);
+		response.end(JSON.stringify(repos));
 	} catch (error) {
 		console.error(error);
 

@@ -3,7 +3,6 @@ import test from 'ava';
 import got from 'got';
 import nock from 'nock';
 import testListen from 'test-listen';
-import etag from 'etag';
 import fixture from './example-response';
 import githubFixture from './github-response';
 
@@ -73,15 +72,7 @@ test('ensure number of repos returned equals `process.env.MAX_REPOS`', async t =
 });
 
 test('set origin header', async t => {
-	const {body, headers} = await got(url, {json: true});
+	const {headers} = await got(url, {json: true});
 	t.is(headers['access-control-allow-origin'], '*');
 	t.is(headers['cache-control'], 's-maxage=86400000, max-age=300');
-	t.is(headers.etag, etag(JSON.stringify(body)));
-});
-
-test('return cached content', async t => {
-	const {headers: {etag}, statusCode} = await got(url, {json: true});
-	const {statusCode: cachedStatusCode} = await got(url, {json: true, headers: {'if-none-match': etag}});
-	t.is(statusCode, 200);
-	t.is(cachedStatusCode, 304);
 });
