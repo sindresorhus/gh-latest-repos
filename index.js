@@ -3,6 +3,7 @@ const graphqlGot = require('graphql-got');
 const controlAccess = require('control-access');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
+
 const {
 	GITHUB_TOKEN,
 	GITHUB_USERNAME,
