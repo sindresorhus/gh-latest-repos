@@ -1,34 +1,33 @@
 'use strict';
 const graphqlGot = require('graphql-got');
 const controlAccess = require('control-access');
-const etag = require('etag');
-const fresh = require('fresh');
 
-const token = process.env.GITHUB_TOKEN;
-const username = process.env.GITHUB_USERNAME;
-const origin = process.env.ACCESS_ALLOW_ORIGIN;
-const cache = `max-age=${Number(process.env.CACHE_MAX_AGE) || 300}`;
-const maxRepos = Number(process.env.MAX_REPOS) || 6;
 const ONE_DAY = 1000 * 60 * 60 * 24;
-let cursor = null;
+const {
+	GITHUB_TOKEN,
+	GITHUB_USERNAME,
+	ACCESS_ALLOW_ORIGIN,
+	CACHE_MAX_AGE = 300,
+	MAX_REPOS = 6
+} = process.env;
 
-if (!token) {
+if (!GITHUB_TOKEN) {
 	throw new Error('Please set your GitHub token in the `GITHUB_TOKEN` environment variable');
 }
 
-if (!username) {
+if (!GITHUB_USERNAME) {
 	throw new Error('Please set your GitHub username in the `GITHUB_USERNAME` environment variable');
 }
 
-if (!origin) {
+if (!ACCESS_ALLOW_ORIGIN) {
 	throw new Error('Please set the `access-control-allow-origin` you want in the `ACCESS_ALLOW_ORIGIN` environment variable');
 }
 
 const query = `
-	query {
-		user(login: "${username}") {
+	query ($cursor: String) {
+		user(login: "${GITHUB_USERNAME}") {
 			repositories(
-				last: ${maxRepos},
+				last: ${MAX_REPOS},
 				isFork: false,
 				isLocked: false,
 				ownerAffiliations: OWNER,
@@ -37,7 +36,7 @@ const query = `
 					field: CREATED_AT,
 					direction: ASC
 				}
-				before: ${cursor}
+				before: $cursor
 			) {
 				edges {
 					node {
@@ -62,54 +61,41 @@ const query = `
 	}
 `;
 
-let responseText = '[]';
-let responseETag = '';
+const fetchRepos = async (repos = [], cursor = null) => {
+	const {body} = await graphqlGot('api.github.com/graphql', {
+		query,
+		token: GITHUB_TOKEN,
+		variables: {cursor}
+	});
 
-async function fetchRepos() {
-	let repos = [];
+	const currentRepos = body.user.repositories.edges
+		.filter(({node: repo}) => repo.description)
+		.map(({node: repo}) => ({
+			...repo,
+			stargazers: repo.stargazers.totalCount,
+			forks: repo.forks.totalCount
+		}));
 
-	while (repos.length < maxRepos) {
-		/* eslint-disable no-await-in-loop */
-		const {body} = await graphqlGot('api.github.com/graphql', {
-			query,
-			token
-		});
-
-		const currentRepos = body.user.repositories.edges
-			.filter(edge => edge.node.description)
-			.map(({node: repo}) => ({
-				...repo,
-				stargazers: repo.stargazers.totalCount,
-				forks: repo.forks.totalCount
-			}));
-
-		if (repos.length + currentRepos.length < maxRepos) {
-			repos = repos.concat(currentRepos);
-		} else {
-			repos = repos.concat(currentRepos.slice(repos.length - maxRepos));
-			break;
-		}
-		cursor = body.user.repositories.edges[0].cursor;
+	if ((repos.length + currentRepos.length) < MAX_REPOS) {
+		return fetchRepos(repos.concat(currentRepos), body.user.repositories.edges[0].cursor);
 	}
 
-	responseText = JSON.stringify(repos);
-	responseETag = etag(responseText);
-}
+	return repos.concat(currentRepos.slice(repos.length - MAX_REPOS));
+};
 
-setInterval(fetchRepos, ONE_DAY);
-fetchRepos();
-
-module.exports = (request, response) => {
+module.exports = async (request, response) => {
 	controlAccess()(request, response);
 
-	if (fresh(request.headers, {etag: responseETag})) {
-		response.statusCode = 304;
-		response.end();
-		return;
+	try {
+		const repos = await fetchRepos();
+
+		response.setHeader('cache-control', `s-maxage=${ONE_DAY}, max-age=${CACHE_MAX_AGE}`);
+		response.end(JSON.stringify(repos));
+	} catch (error) {
+		console.error(error);
+
+		response.statusCode = 500;
+		response.setHeader('content-type', 'text/plain');
+		response.end('Internal server error');
 	}
-
-	response.setHeader('cache-control', cache);
-	response.setHeader('etag', responseETag);
-
-	response.end(responseText);
 };
