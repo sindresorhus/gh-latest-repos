@@ -90,6 +90,7 @@ module.exports = async (request, response) => {
 	try {
 		const repos = await fetchRepos();
 
+		response.setHeader('content-type', 'application/json');
 		response.setHeader('cache-control', `s-maxage=${ONE_DAY}, max-age=${CACHE_MAX_AGE}`);
 		response.end(JSON.stringify(repos));
 	} catch (error) {
