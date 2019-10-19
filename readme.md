@@ -15,7 +15,7 @@ It returns the latest repos along with some metadata. The result is cached for a
 
 ```
 $ git clone https://github.com/sindresorhus/gh-latest-repos.git
-$ now gh-latest-repos --env GITHUB_TOKEN=xxx --env GITHUB_USERNAME=xxx --env ACCESS_ALLOW_ORIGIN=xxx --env MAX_REPOS=xxx --env CACHE_MAX_AGE=xxx
+$ now gh-latest-repos --env GITHUB_TOKEN=xxx --env GITHUB_USERNAME=xxx --env ACCESS_ALLOW_ORIGIN=xxx --env MAX_REPOS=xxx
 ```
 
 ### Manual
@@ -31,4 +31,3 @@ Define the following environment variables:
 - `GITHUB_USERNAME` - The username you like to get repos from.
 - `ACCESS_ALLOW_ORIGIN` - The URL of your website or `*` if you want to allow any origin (not recommended), for the `Access-Control-Allow-Origin` header.
 - `MAX_REPOS` - The number of repos returned. Optional. Defaults to 6.
-- `CACHE_MAX_AGE` - The maximum age for client cache-control in seconds. Optional. Defaults to 300 (5 minutes).

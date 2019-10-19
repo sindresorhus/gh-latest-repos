@@ -74,5 +74,5 @@ test('ensure number of repos returned equals `process.env.MAX_REPOS`', async t =
 test('set origin header', async t => {
 	const {headers} = await got(url, {json: true});
 	t.is(headers['access-control-allow-origin'], '*');
-	t.is(headers['cache-control'], 's-maxage=86400, max-age=300');
+	t.is(headers['cache-control'], 's-maxage=86400, max-age=0');
 });
