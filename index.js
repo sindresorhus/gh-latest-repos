@@ -2,13 +2,12 @@
 const graphqlGot = require('graphql-got');
 const controlAccess = require('control-access');
 
-const ONE_DAY = 1000 * 60 * 60 * 24;
+const ONE_DAY = 60 * 60 * 24;
 
 const {
 	GITHUB_TOKEN,
 	GITHUB_USERNAME,
 	ACCESS_ALLOW_ORIGIN,
-	CACHE_MAX_AGE = 300,
 	MAX_REPOS = 6
 } = process.env;
 
@@ -91,7 +90,7 @@ module.exports = async (request, response) => {
 		const repos = await fetchRepos();
 
 		response.setHeader('content-type', 'application/json');
-		response.setHeader('cache-control', `s-maxage=${ONE_DAY}, max-age=${CACHE_MAX_AGE}`);
+		response.setHeader('cache-control', `s-maxage=${ONE_DAY}, max-age=0`);
 		response.end(JSON.stringify(repos));
 	} catch (error) {
 		console.error(error);
