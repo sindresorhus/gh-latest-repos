@@ -1,6 +1,5 @@
 {
 	"version": 2,
-	"alias": "gh-latest-repos",
 	"builds": [
 		{
 			"src": "index.js",
