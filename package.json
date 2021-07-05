@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"engines": {
-		"node": ">=10"
+		"node": ">=14"
 	},
 	"scripts": {
 		"test": "xo && ava",
@@ -15,7 +15,7 @@
 		"ava": "^2.1.0",
 		"got": "^9.6.0",
 		"nock": "^10.0.6",
-		"now": "^15.6.2",
+		"now": "^21.0.1",
 		"test-listen": "^1.1.0",
 		"xo": "^0.24.0"
 	}

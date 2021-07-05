@@ -40,6 +40,7 @@ const query = `
 			) {
 				edges {
 					node {
+						createdAt
 						name
 						description
 						url
@@ -69,7 +70,7 @@ const fetchRepos = async (repos = [], cursor = null) => {
 	});
 
 	const currentRepos = body.user.repositories.edges
-		.filter(({node: repo}) => repo.description)
+		.filter(({node: repo}) => repo.description && repo.name !== '.github')
 		.map(({node: repo}) => ({
 			...repo,
 			stargazers: repo.stargazers.totalCount,
@@ -88,6 +89,8 @@ module.exports = async (request, response) => {
 
 	try {
 		const repos = await fetchRepos();
+
+		repos.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
 
 		response.setHeader('content-type', 'application/json');
 		response.setHeader('cache-control', `s-maxage=${ONE_DAY}, max-age=0`);
