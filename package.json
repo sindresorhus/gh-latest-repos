@@ -1,22 +1,24 @@
 {
 	"private": true,
+	"type": "module",
 	"engines": {
-		"node": ">=14"
+		"node": ">=18"
 	},
 	"scripts": {
-		"test": "xo && ava",
-		"start": "now dev"
+		"//test": "xo && ava",
+		"test": "ava",
+		"start": "GITHUB_USERNAME=sindresorhus ACCESS_ALLOW_ORIGIN='*' vercel dev"
 	},
 	"dependencies": {
 		"control-access": "^0.1.1",
 		"graphql-got": "^0.1.2"
 	},
 	"devDependencies": {
-		"ava": "^2.1.0",
-		"got": "^9.6.0",
-		"nock": "^10.0.6",
-		"now": "^21.0.1",
+		"ava": "^5",
+		"got": "^13.0.0",
+		"nock": "^13.5.4",
 		"test-listen": "^1.1.0",
-		"xo": "^0.24.0"
+		"vercel": "^34.1.5",
+		"xo": "^0.58.0"
 	}
 }

@@ -1,6 +1,6 @@
-'use strict';
-const graphqlGot = require('graphql-got');
-const controlAccess = require('control-access');
+import process from 'node:process';
+import graphqlGot from 'graphql-got';
+import controlAccess from 'control-access';
 
 const ONE_DAY = 60 * 60 * 24;
 
@@ -8,7 +8,7 @@ const {
 	GITHUB_TOKEN,
 	GITHUB_USERNAME,
 	ACCESS_ALLOW_ORIGIN,
-	MAX_REPOS = 6
+	MAX_REPOS = 6,
 } = process.env;
 
 if (!GITHUB_TOKEN) {
@@ -66,7 +66,7 @@ const fetchRepos = async (repos = [], cursor = null) => {
 	const {body} = await graphqlGot('api.github.com/graphql', {
 		query,
 		token: GITHUB_TOKEN,
-		variables: {cursor}
+		variables: {cursor},
 	});
 
 	const currentRepos = body.user.repositories.edges
@@ -74,17 +74,17 @@ const fetchRepos = async (repos = [], cursor = null) => {
 		.map(({node: repo}) => ({
 			...repo,
 			stargazers: repo.stargazers.totalCount,
-			forks: repo.forks.totalCount
+			forks: repo.forks.totalCount,
 		}));
 
 	if ((repos.length + currentRepos.length) < MAX_REPOS) {
-		return fetchRepos(repos.concat(currentRepos), body.user.repositories.edges[0].cursor);
+		return fetchRepos([...repos, ...currentRepos], body.user.repositories.edges[0].cursor);
 	}
 
-	return repos.concat(currentRepos.slice(repos.length - MAX_REPOS));
+	return [...repos, ...currentRepos.slice(repos.length - MAX_REPOS)];
 };
 
-module.exports = async (request, response) => {
+export default async function main(request, response) {
 	controlAccess()(request, response);
 
 	try {
@@ -102,4 +102,4 @@ module.exports = async (request, response) => {
 		response.setHeader('content-type', 'text/plain');
 		response.end('Internal server error');
 	}
-};
+}

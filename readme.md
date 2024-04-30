@@ -8,20 +8,18 @@ It returns the latest repos along with some metadata. The result is cached for a
 
 [Example response](example-response.json)
 
-
 ## Usage
 
-### With [`now`](https://now.sh)
+### With [`vercel`](https://vercel.com)
 
-```
-$ git clone https://github.com/sindresorhus/gh-latest-repos.git
-$ now gh-latest-repos --env GITHUB_TOKEN=xxx --env GITHUB_USERNAME=xxx --env ACCESS_ALLOW_ORIGIN=xxx --env MAX_REPOS=xxx
+```sh
+git clone https://github.com/sindresorhus/gh-latest-repos.git
+vercel gh-latest-repos --env GITHUB_TOKEN=xxx --env GITHUB_USERNAME=xxx --env ACCESS_ALLOW_ORIGIN=xxx --env MAX_REPOS=xxx
 ```
 
 ### Manual
 
 To deploy on your own hosting provider, check out [11e01ac](https://github.com/sindresorhus/gh-latest-repos/commit/11e01acb0d0fd40d69c03155e9862b4cdc71b6f2), set the below environment variables, and start it with `npm start`.
-
 
 ## Environment variables
 
